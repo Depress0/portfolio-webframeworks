@@ -1,16 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Outlet, createBrowserRouter, RouterProvider, Route, NavLink } from "react-router-dom";
 
+//Interfaces Bitcoin Api
+interface Bitcoin {
+  time:       Time;
+  disclaimer: string;
+  chartName:  string;
+  bpi:        Bpi;
+}
+
+interface Bpi {
+  USD: Eur;
+  GBP: Eur;
+  EUR: Eur;
+}
+
+interface Eur {
+  code:        string;
+  symbol:      string;
+  rate:        string;
+  description: string;
+  rate_float:  number;
+}
+
+interface Time {
+  updated:    string;
+  updatedISO: Date;
+  updateduk:  string;
+}
+/////////////////////////////////////////////////
+
 const Root = () => {
-  return <div>
+  const [ranFirstTime,setRanFirstTime] = useState<boolean>(false)
+  const [btcPrice,setBtcPrice] = useState<number>();
+  const [updateTime,setUpdateTime] = useState<string>('Updating...');
+  const ApiCall = async() => {
+    let result = await axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+    let data:Bitcoin = await result.data
+    setBtcPrice(data.bpi.EUR.rate_float)
+    setUpdateTime(data.time.updateduk)
+    setTimeout(ApiCall,10000)
+  }
+  ApiCall()
+    return <div>
     <div className='nav'>
       <NavLink to={"/"}>Home</NavLink>
       <NavLink to={"projects"}>Projects</NavLink>
       <NavLink to={"contact"}>Contact</NavLink>
     </div>
     <div className='nav-api'>
-      Current Bitcoin values:
+      <div>Current Bitcoin price: €{btcPrice} ({updateTime})</div>
     </div>
     <div>
       <Outlet />
@@ -58,13 +98,6 @@ function App() {
           path: "",
           element: <Home />
         },
-        // {
-        //   path: "pokemon",
-        //   element: <Pokemon />
-        // },
-        // {
-        //   path: "pokemon/:id"
-        // }
       ]
     }
   ]);
