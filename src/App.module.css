@@ -1,0 +1,76 @@
+body {
+    background-image: linear-gradient(rgba(216, 2, 115, 1), rgba(0, 57, 169, 1));
+    height: 100vh;
+    color: white;
+}
+
+/*ROUTERNAV*/
+
+.nav {
+    padding: 1rem;
+    background-color: rgb(48, 48, 48);
+}
+
+
+.navlink {
+    color: white;
+    text-decoration: none;
+    margin: 1rem;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.navlinkActive {
+    color: white;
+    text-decoration: none;
+    margin: 1rem;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    background-color: rgb(69, 68, 68);
+}
+
+.navapi {
+    background-color: rgb(48, 48, 48);
+}
+
+/*HOME PAGE*/
+
+.hometitle {
+    text-align: center;
+}
+
+
+.homemain {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.homeskills {
+    grid-area: 1 / 1 / 3 / 2;
+}
+
+.homeskillscomp {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1rem;
+}
+
+.homeskillscompimg {
+    grid-row: 1 / 2;
+}
+
+.homeskillscomptext {
+    grid-row: 1 / 2;
+    text-align: center;
+    margin: auto;
+}
+
+.homeprojects {
+    grid-area: 1 / 2 / 3 / 3;
+    text-align: center;
+}
