@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Outlet, createBrowserRouter, RouterProvider, Route, NavLink } from "react-router-dom";
 import styles from './App.module.css';
+import emailjs from '@emailjs/browser';
+import { init } from '@emailjs/browser/es/methods/init/init';
+init("G9l6UDpbY05GTHUkR")
 
 //Interfaces Bitcoin Api
 interface Bitcoin {
@@ -32,6 +35,8 @@ interface Time {
 }
 /////////////////////////////////////////////////
 
+
+
 const Root = () => {
   const [btcPrice, setBtcPrice] = useState<number>();
   const [updateTime, setUpdateTime] = useState<string>('Updating...');
@@ -43,14 +48,14 @@ const Root = () => {
     setTimeout(ApiCall, 10000)
   }
   ApiCall()
-  return <div>
+  return <div className={styles.navbar}>
     <div className={styles.nav}>
       <NavLink className={({ isActive }) => isActive ? styles.navlinkActive : styles.navlink} to={"/"}>Home</NavLink>
       <NavLink className={({ isActive }) => isActive ? styles.navlinkActive : styles.navlink} to={"projects"}>Projects</NavLink>
       <NavLink className={({ isActive }) => isActive ? styles.navlinkActive : styles.navlink} to={"contact"}>Contact</NavLink>
-    </div>
-    <div className={styles.navapi}>
-      <div>Current Bitcoin price: €{btcPrice} ({updateTime})</div>
+      <span>
+        <label className={styles.navapi}> 1BTC = €{btcPrice} ({updateTime})</label>
+      </span>
     </div>
     <div>
       <Outlet />
@@ -59,8 +64,31 @@ const Root = () => {
 }
 
 const Contact = () => {
-  return <div>
+  let form: any = useRef();
+  const sendMail = async (e: any) => {
+    e.preventDefault()
+    await emailjs.sendForm("service_8uz0jik", "template_uz2jaul", form.current, "G9l6UDpbY05GTHUkR")
+      .then((result) => {
+        console.log(result.text);
+      }, (error) => {
+        console.log(error.text);
+      });;
+    window.location.reload();
+  }
 
+
+  return <div className={styles.contactpage}>
+    <h1 className={styles.title}>Contact</h1>
+    <p className={styles.contactinfo}>For any question or inquiries, contact me using the form below</p>
+    <form className={styles.contactform} ref={form} onSubmit={sendMail} action="">
+      <label htmlFor="">Name</label><br />
+      <input defaultValue="" className={styles.contactforminput} required type="text" name='user_name' /><br />
+      <label htmlFor="">Email</label><br />
+      <input defaultValue="" className={styles.contactforminput} required type="email" name='user_email' /> <br />
+      <label htmlFor="">Message</label><br />
+      <textarea defaultValue="" className={styles.contactformtextarea} name="message" id="" cols={30} rows={10}></textarea><br />
+      <button className={styles.contactformsubmit} type="submit" value="Send">Send</button>
+    </form>
   </div>
 }
 
@@ -72,31 +100,33 @@ const Projects = () => {
 
 const Home = () => {
   return <div className={styles.App}>
-    <h1 className={styles.hometitle}>Ian Segers</h1>
+    <h1 className={styles.title}>Ian Segers</h1>
     <main className={styles.homemain}>
       <article className={styles.homeskills}>
-        Welcome to my personal portfolio! <br />
-        I am a web application developer based in Belgium. <br />
-        Experienced in multiple programming languages listed below. <br />
+        <div className={styles.aboutme}>
+          <p>Welcome to my personal portfolio!</p>
+          <p>I am a web app developer based in Belgium.</p>
+          <p>Experienced in multiple programming languages/frameworks like:</p>
+        </div>
         <div className={styles.homeskillsgrid}>
           <div className={styles.homeskillscomp}>
             <img className={styles.homeskillsimg} src="./csharp.png" width='75' alt="CSharp Logo" />
             <p className={styles.homeskillscomptext}>C#</p>
           </div>
           <div className={styles.homeskillscomp}>
-            <img  className={styles.homeskillsimg} src="./ts.png" width='75' alt="TypeScript Logo" />
+            <img className={styles.homeskillsimg} src="./ts.png" width='75' alt="TypeScript Logo" />
             <p className={styles.homeskillscomptext}>TypeScript</p>
           </div>
           <div className={styles.homeskillscomp} >
-            <img className={styles.homeskillsimg}src="./react.png" width='75' height='75' alt="React Logo" />
+            <img className={styles.homeskillsimg} src="./react.png" width='75' height='75' alt="React Logo" />
             <p className={styles.homeskillscomptext}>React</p>
           </div >
           <div className={styles.homeskillscomp}>
-            <img className={styles.homeskillsimg}src="./mysql.png" width='75' alt="MySQL Logo" />
+            <img className={styles.homeskillsimg} src="./mysql.png" width='75' alt="MySQL Logo" />
             <p className={styles.homeskillscomptext}>MySQL</p>
           </div>
-          <div className={styles.homeskillscomp}> 
-            <img className={styles.homeskillsimg} src="./aspnet.png" width='75'height='75' alt="ASP.NET Logo" />
+          <div className={styles.homeskillscomp}>
+            <img className={styles.homeskillsimg} src="./aspnet.png" width='75' height='75' alt="ASP.NET Logo" />
             <p className={styles.homeskillscomptext}>ASP.NET</p>
           </div>
         </div>
@@ -105,7 +135,7 @@ const Home = () => {
         Further in this portfolio you can find some of my projects. <br />
         <h2>Random Project</h2>
         <div className={styles.homerandomproject}>
-          
+
         </div>
       </article>
     </main>
