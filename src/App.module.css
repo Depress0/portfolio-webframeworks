@@ -1,6 +1,18 @@
+.body {
+    background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+    height: 94vh;
+    color: white;
+}
+
+.bodyDark {
+    background-color: rgb(48, 48, 48);
+    height: 94vh;
+    color: white;
+}
+
 body {
     background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
-    height: 100vh;
+    height: 94vh;
     color: white;
 }
 
@@ -40,6 +52,14 @@ body {
     margin-bottom: none;
     padding-bottom: none;
 }
+.darkmodebutton {
+    border-style: solid;
+    border-color: white;
+    border-radius: 2rem;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+}
 
 /*HOME PAGE*/
 
@@ -56,7 +76,7 @@ body {
     grid-row-gap: 0px;
 }
 
-.aboutme{
+.aboutme {
     padding-left: 2rem;
 }
 
@@ -84,6 +104,23 @@ body {
 .homeprojects {
     grid-area: 1 / 2 / 3 / 3;
     text-align: center;
+}
+.homerandomprojectbutton {
+    border-style: solid;
+    border-color: white;
+    border-radius: 2rem;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    margin: 1rem;
+    padding: 1rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+.homerandomprojectbutton:hover {
+    background-color: rgb(218, 218, 218);
+    border-color: rgb(218, 218, 218);
+    cursor: pointer;
 }
 
 /* CONTACT */
@@ -129,7 +166,44 @@ body {
     border-style: none;
 }
 
-.contactformsubmit:hover{
+.contactformsubmit:hover {
     background-color: rgb(218, 218, 218);
+    border-color: rgb(218, 218, 218);
+    cursor: pointer;
+}
+
+/*PROJECTS*/
+h1  {
+    text-align: center;
+}
+.projectsflexbox {
+    display: grid;
+    grid-template-rows: 4fr;
+    border-style: solid;
+    border-radius: 2rem;
+    border-color: white;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 10vh;
+    justify-content: center;
+}
+
+.projectsflexobject {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 20rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-style: solid;
+    border-color: white;
+    border-radius: 2rem;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+}
+.projectsflexobject:hover {
+    background-color: rgb(218, 218, 218);
+    border-color: rgb(218, 218, 218);
     cursor: pointer;
 }
